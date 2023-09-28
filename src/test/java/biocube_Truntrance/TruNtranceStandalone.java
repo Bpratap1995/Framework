@@ -3,6 +3,7 @@ package biocube_Truntrance;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -14,7 +15,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class TruNtranceStandalone {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		
 		WebDriverManager.chromedriver().setup();
 		
@@ -42,6 +43,25 @@ public class TruNtranceStandalone {
 		WebElement login = driver.findElement(By.xpath("//button[@type='submit']"));
 		System.out.println(login.getText());
 		login.click();
+		String Expected=driver.getTitle();
+	 
+		WebElement dropdown1=driver.findElement(By.xpath("//li[@class='nav-item dropdown']"));
+		dropdown1.click();
+		Thread.sleep(3000);
+		WebElement logout=driver.findElement(By.xpath("//a[normalize-space()='Logout']"));
+		logout.click();
+		
+		System.out.println("Expected:"+Expected);
+		//driver.findElement(By.cssSelector("span.nav-link-text ms-1")).click();
+		//driver.findElement(By.xpath("(//a[@class='nav-link text-white '])[1]")).click();
+		//Thread.sleep(3000);
+		//WebElement element = driver.findElement(By.xpath("//span[text()='Dashboard']"));
+		//JavascriptExecutor js = (JavascriptExecutor) driver;
+	  //   js.executeScript("arguments[0].click();", element);
+	    // driver.findElement(By.xpath("//span[normalize-space()='Manage Country/State/District/City']")).click();
+	  // driver.findElement(By.xpath(""))
+		
+		
 		
 		
 

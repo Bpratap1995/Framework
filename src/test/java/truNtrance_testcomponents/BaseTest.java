@@ -1,7 +1,8 @@
-package truNtrance_testcomponents;
+ package truNtrance_testcomponents;
 
 import java.io.File;
 import java.io.FileInputStream;
+
 import java.io.IOException;
 import java.time.Duration;
 import java.util.HashMap;
@@ -9,6 +10,11 @@ import java.util.List;
 import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -16,6 +22,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,6 +33,7 @@ import truNtrance.LoginPage;
 public class BaseTest {
 	public WebDriver driver;
 	public LoginPage lp;
+	DataFormatter formatter = new DataFormatter();
 	
 	public WebDriver initializeDriver() throws IOException {
 		Properties prop = new Properties();
@@ -47,7 +55,7 @@ public class BaseTest {
 		else if (browserName.equalsIgnoreCase("Edge")) {
 			//edge
 		}
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
 		driver.manage().window().maximize();
 		return driver;
 		
@@ -85,9 +93,40 @@ public class BaseTest {
 		return lp;
 	}
 	@AfterMethod(alwaysRun=true)
-	public void DriverClose() {
+	public void DriverClose() throws InterruptedException {
+		
 		driver.close();
 	}
+	
+	@DataProvider(name="drivenTest")
+	public Object[][] getData() throws IOException {
+		File file = new File("C:\\Users\\Bhanu Pratap\\Downloads\\AttendFyData.xlsx");
+		FileInputStream fis = new FileInputStream(file);
+		XSSFWorkbook wb = new XSSFWorkbook(fis);
+		XSSFSheet sheet = wb.getSheet("AttendFy");
+		int rowCount = sheet.getPhysicalNumberOfRows();
+		XSSFRow row = sheet.getRow(0);
+	    int colCount = row.getLastCellNum();
+	    
+	    Object [][] data = new Object[rowCount-1][colCount];
+	    
+	    for(int i=0;i<rowCount-1;i++) {
+	    	row=sheet.getRow(i+1);
+	    	for(int j=0;j<colCount;j++) {
+	    		XSSFCell cell = row.getCell(j);
+	    		
+	    		data[i][j]=formatter.formatCellValue(cell);
+	    		
+	    		
+	    	}
+	    }
+	    return data;
+		
+	}
+	public void writeData() {
+		
+	}
+	
 	
 
 }

@@ -3,13 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="biocube.StandAlone">
+      <class name="biocube_Truntrance.TruNtrance">
         <methods>
-          <include name="DriverClose"/>
           <include name="LaunchApplication"/>
-          <include name="submit" invocation-numbers="1"/>
+          <include name="LoginSuperAdmin" invocation-numbers="0 2"/>
+          <include name="DriverClose"/>
         </methods>
-      </class> <!-- biocube.StandAlone -->
+      </class> <!-- biocube_Truntrance.TruNtrance -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

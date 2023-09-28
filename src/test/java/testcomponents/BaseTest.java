@@ -30,6 +30,7 @@ public class BaseTest {
 	public LandingPage lp;
 	
 	public WebDriver initializeDriver() throws IOException {
+	
 		Properties prop = new Properties();
 		FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"\\src\\main\\java\\resources\\GlobalData.properties");
 		prop.load(fis);
@@ -86,6 +87,7 @@ public class BaseTest {
 		lp.goTo();
 		return lp;
 	}
+	
 	@AfterMethod(alwaysRun=true)
 	public void DriverClose() {
 		driver.close();
